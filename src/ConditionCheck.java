@@ -1,4 +1,8 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ConditionCheck {
 
@@ -41,43 +45,89 @@ public class ConditionCheck {
                     }
                 }
             }
+            return true;
         } catch(Exception e) {
             System.out.println(e);
+            return false;
+        }
+    }
+
+    public boolean birthdateCheck(String Birthdate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        sdf.setLenient(false);
+        try {
+            sdf.parse(Birthdate);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    public boolean addressCheck(String Address) {
+        String regexPattern = "^[^|]+\\|[^|]+\\|[^|]+$";
+        Pattern pattern = Pattern.compile(regexPattern);
+        Matcher matcher = pattern.matcher(Address);
+        return matcher.matches();
+    }
+
+    public boolean bioCheck(String Bio) {
+        int counter = 0;
+        for (char a: Bio.toCharArray()) {
+            if (String.valueOf(a).isBlank()) {
+                counter++;
+            }
+        }
+        if (counter >= 10 && counter <= 30) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean occupationsCheck(ArrayList <String> Occupations) {
+        if (Occupations.size() >= 1 && Occupations.size() <= 5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean awardsCheck(ArrayList <String> Awards) {
+        int counter = 0;
+        if (Awards.size() <= 2) {
+            for (String award:  Awards) {
+                String[] parts = award.split(", ");
+                String year = parts[0];
+                String title = parts[1];
+                try {
+                    Integer.parseInt(year);
+                    for (char a: title.toCharArray()) {
+                        if (String.valueOf(a).isBlank()) {
+                            counter++;
+                        }
+                    }
+                    if (counter >= 4 && counter <= 10) {
+                        counter = 0;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
         }
         return true;
     }
 
-    public boolean birthdateCheck(String Birthdate) {
-
-
-        return true;
-    }
-
-    public boolean addressCheck(String Address) {
-
-
-        return true;
-    }
-
-    public boolean bioCheck(String Bio) {
-
-
-        return true;
-    }
-
-    public boolean occupationsCheck(ArrayList <String> Occupations) {
-
-
-        return true;
-    }
-
-    public boolean awardsCheck(ArrayList <String> Awards) {
-
-        return true;
-    }
-
     public boolean genresCheck(ArrayList <String> Genres) {
-
+        if (Genres.size() >= 1 && Genres.size() <= 4) {
+            for (String genre: Genres) {
+                if (genre.equalsIgnoreCase("pop") && Genres.contains("rock")) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
