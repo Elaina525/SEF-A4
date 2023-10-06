@@ -5,9 +5,10 @@ import java.util.ArrayList;
 public class Test {
     
     public static void main(String[] args) {
-        int counter = 0;
-        String Bio = "a b c d e a a a a a a a a a a a";
-        
+        ConditionCheck cc = new ConditionCheck();
+        ArrayList <String> occupation = new ArrayList<>();
+        ArrayList <String> award = new ArrayList<>();
+        ArrayList <String> genre = new ArrayList<>();
         
     }
 }

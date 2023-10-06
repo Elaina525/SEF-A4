@@ -94,12 +94,12 @@ public class ConditionCheck {
 
     public boolean awardsCheck(ArrayList <String> Awards) {
         int counter = 0;
-        if (Awards.size() <= 2) {
-            for (String award:  Awards) {
-                String[] parts = award.split(", ");
-                String year = parts[0];
-                String title = parts[1];
+        if (Awards.size() <= 3) {
+            for (String award: Awards) {
                 try {
+                    System.out.println(award);
+                    String year = award.substring(0, 4);
+                    String title = award.substring(5);
                     Integer.parseInt(year);
                     for (char a: title.toCharArray()) {
                         if (String.valueOf(a).isBlank()) {
@@ -113,6 +113,7 @@ public class ConditionCheck {
                         return false;
                     }
                 } catch (NumberFormatException e) {
+                    // System.out.println(e);
                     return false;
                 }
             }
@@ -121,12 +122,14 @@ public class ConditionCheck {
     }
 
     public boolean genresCheck(ArrayList <String> Genres) {
-        if (Genres.size() >= 1 && Genres.size() <= 4) {
+        if (Genres.size() >= 2 && Genres.size() <= 5) {
             for (String genre: Genres) {
                 if (genre.equalsIgnoreCase("pop") && Genres.contains("rock")) {
                     return false;
                 }
             }
+        } else {
+            return false;
         }
         return true;
     }
