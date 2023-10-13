@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ConditionCheck {
+public class AddConditionCheck {
 
     public boolean IDCheck(String ID) {
 
