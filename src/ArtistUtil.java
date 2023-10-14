@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -7,13 +6,13 @@ import java.util.Scanner;
 public class ArtistUtil {
     public boolean addArtist(Artist artist) {
         AddConditionCheck acc = new AddConditionCheck();
-        if (acc.IDCheck(artist.getID()) == true &&
-            acc.addressCheck(artist.getAddress()) == true &&
-            acc.awardsCheck(artist.getAwards()) == true &&
-            acc.bioCheck(artist.getBio()) == true &&
-            acc.birthdateCheck(artist.getBirthdate()) == true &&
-            acc.genresCheck(artist.getGenres()) == true &&
-            acc.occupationsCheck(artist.getOccupations()) == true) {
+        if (acc.IDCheck(artist.getID()) &&
+            acc.addressCheck(artist.getAddress()) &&
+            acc.awardsCheck(artist.getAwards()) &&
+            acc.bioCheck(artist.getBio()) &&
+            acc.birthdateCheck(artist.getBirthdate()) &&
+            acc.genresCheck(artist.getGenres()) &&
+            acc.occupationsCheck(artist.getOccupations())) {
             try {
                 File file = new File("ArtistData.txt");
                 FileWriter fr = new FileWriter(file, true);
@@ -26,17 +25,38 @@ public class ArtistUtil {
                 return true;
             }
             catch (Exception e) {
-                System.out.println("Artist add failed, please try again!");
+                System.out.println("Add Failed!");
                 return false;
             }
         }
         return true;
     }
 
-    public boolean updateArtist() {
-
-
-        return true;
+    public boolean updateArtist(Artist artist, String id, String name, String address, String birthdate, String bio, ArrayList<String> occupations,
+    ArrayList<String> genres, ArrayList<String> awards) {
+        UpdateConditionCheck ucc = new UpdateConditionCheck();
+        AddConditionCheck acc = new AddConditionCheck();
+        if (ucc.birthYearCheck(artist, birthdate, occupations) && ucc.awardsCheck(artist, awards)) {
+            if (acc.IDCheck(artist.getID()) &&
+                acc.addressCheck(artist.getAddress()) &&
+                acc.awardsCheck(artist.getAwards()) &&
+                acc.bioCheck(artist.getBio()) &&
+                acc.birthdateCheck(artist.getBirthdate()) &&
+                acc.genresCheck(artist.getGenres()) &&
+                acc.occupationsCheck(artist.getOccupations())) {
+                    artist.setID(id);
+                    artist.setAddress(address);
+                    artist.setAwards(awards);
+                    artist.setBio(bio);
+                    artist.setBirthdate(birthdate);
+                    artist.setGenres(genres);
+                    artist.setOccupations(occupations);
+                    artist.setName(name);
+                    return true;
+                }
+        }
+        System.out.println("Update Failed!");
+        return false;
     }
 
     public ArrayList<Artist> getArtists() {
@@ -87,8 +107,8 @@ public class ArtistUtil {
                 artists.add(artist);
             }
             scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Read data failed!");
         }
         return artists;
     }

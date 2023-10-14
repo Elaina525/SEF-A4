@@ -11,6 +11,7 @@ public class AddConditionCheck {
         int counter = 0;
 
         if (ID.length() != 10) {
+            System.out.println("Length must be 10");
             return false;
         }
 
@@ -47,7 +48,7 @@ public class AddConditionCheck {
             }
             return true;
         } catch(Exception e) {
-            System.out.println(e);
+            System.out.println("Invalid ID!");
             return false;
         }
     }
@@ -59,6 +60,7 @@ public class AddConditionCheck {
             sdf.parse(Birthdate);
             return true;
         } catch (ParseException e) {
+            System.out.println("Invalid Birthdate!");
             return false;
         }
     }
@@ -67,6 +69,9 @@ public class AddConditionCheck {
         String regexPattern = "^[^|]+\\|[^|]+\\|[^|]+$";
         Pattern pattern = Pattern.compile(regexPattern);
         Matcher matcher = pattern.matcher(Address);
+        if (!matcher.matches()) {
+            System.out.println("Invalid Address!");
+        }
         return matcher.matches();
     }
 
@@ -80,6 +85,7 @@ public class AddConditionCheck {
         if (counter >= 10 && counter <= 30) {
             return true;
         } else {
+            System.out.println("Invalid Bio!");
             return false;
         }
     }
@@ -88,6 +94,7 @@ public class AddConditionCheck {
         if (Occupations.size() >= 1 && Occupations.size() <= 5) {
             return true;
         } else {
+            System.out.println("Invalid Occupations!");
             return false;
         }
     }
@@ -110,10 +117,11 @@ public class AddConditionCheck {
                         counter = 0;
                         return true;
                     } else {
+                        System.out.println("Invalid Awards!");
                         return false;
                     }
-                } catch (NumberFormatException e) {
-                    // System.out.println(e);
+                } catch (Exception e) {
+                    System.out.println("Invalid Awards!");
                     return false;
                 }
             }
@@ -125,10 +133,12 @@ public class AddConditionCheck {
         if (Genres.size() >= 2 && Genres.size() <= 5) {
             for (String genre: Genres) {
                 if (genre.equalsIgnoreCase("pop") && Genres.contains("rock")) {
+                    System.out.println("Invalid Genres!");
                     return false;
                 }
             }
         } else {
+            System.out.println("Invalid Genres!");
             return false;
         }
         return true;
