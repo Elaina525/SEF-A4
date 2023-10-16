@@ -29,7 +29,7 @@ public class ArtistUtil {
                 return false;
             }
         }
-        return true;
+        return false;
     }
 
     public boolean updateArtist(Artist artist, String id, String name, String address, String birthdate, String bio, ArrayList<String> occupations,
