@@ -30,22 +30,25 @@ public class AddConditionCheck {
                         System.out.println("First 3 numbers to in range of 5-9");
                         return false;
                     }
-                } else if (counter >= 3 && counter <7) {
+                } else if (counter >= 3 && counter <8) {
                     if (Character.isLetter(a.charAt(0)) && a.equals(a.toUpperCase())) {
                         counter++;
                     } else {
                         System.out.println("4-7 not letters or not uppercase");
                         return false;
                     }
-                } else if (counter <= 9) {
-                    if (Character.isLetter(a.charAt(0)) && Character.isDigit(a.charAt(0))) {
+                } else if (counter >= 8 && counter <= 9) {
+                    if (!Character.isLetterOrDigit(a.charAt(0))) {
+                        counter++;
+                    } else {
                         System.out.println("Last 2 not symbols");
                         return false;
-                    } else {
-                        counter++;
                     }
                 }
-            }
+                
+                
+                }
+            
             return true;
         } catch(Exception e) {
             System.out.println("Invalid ID!");
@@ -126,7 +129,7 @@ public class AddConditionCheck {
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public boolean genresCheck(ArrayList <String> Genres) {

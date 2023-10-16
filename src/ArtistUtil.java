@@ -25,6 +25,7 @@ public class ArtistUtil {
                 return true;
             }
             catch (Exception e) {
+                System.out.println(e);
                 System.out.println("Add Failed!");
                 return false;
             }
@@ -36,14 +37,14 @@ public class ArtistUtil {
     ArrayList<String> genres, ArrayList<String> awards) {
         UpdateConditionCheck ucc = new UpdateConditionCheck();
         AddConditionCheck acc = new AddConditionCheck();
-        if (ucc.birthYearCheck(artist, birthdate, occupations) && ucc.awardsCheck(artist, awards)) {
-            if (acc.IDCheck(artist.getID()) &&
-                acc.addressCheck(artist.getAddress()) &&
-                acc.awardsCheck(artist.getAwards()) &&
-                acc.bioCheck(artist.getBio()) &&
-                acc.birthdateCheck(artist.getBirthdate()) &&
-                acc.genresCheck(artist.getGenres()) &&
-                acc.occupationsCheck(artist.getOccupations())) {
+            if (ucc.birthYearCheck(artist, birthdate, occupations) && ucc.awardsCheck(artist, awards)) {
+            if (acc.IDCheck(id) &&
+                acc.addressCheck(address) &&
+                acc.awardsCheck(awards) &&
+                acc.bioCheck(bio) &&
+                acc.birthdateCheck(birthdate) &&
+                acc.genresCheck(genres) &&
+                acc.occupationsCheck(occupations)) {
                     artist.setID(id);
                     artist.setAddress(address);
                     artist.setAwards(awards);
@@ -52,11 +53,17 @@ public class ArtistUtil {
                     artist.setGenres(genres);
                     artist.setOccupations(occupations);
                     artist.setName(name);
+                    System.out.println("Yes");
                     return true;
+                } else {
+                    System.out.println("ACC failed");
+                    return false;
                 }
-        }
-        System.out.println("Update Failed!");
-        return false;
+            } else {
+                System.out.println("UCC failed");
+                return false;
+            }
+        
     }
 
     public ArrayList<Artist> getArtists() {

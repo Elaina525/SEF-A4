@@ -5,12 +5,14 @@ public class UpdateConditionCheck {
         try {
             int birthYearInt = Integer.parseInt(birthYear.substring(6)); // Extract the birth year
             if (birthYearInt < 2000) {
-            // Artist was born before 2000, check if occupations are changed
-            
-            if (!occupations.equals(artist.getOccupations())) {
-                return false; // Occupations cannot be changed
+                // Artist was born before 2000, check if occupations are changed
+                
+                if (!occupations.equals(artist.getOccupations())) {
+                    return false; // Occupations cannot be changed
+                }
+            } else {
+                return true;
             }
-        }
         } catch (Exception e) {
             System.out.println("Invalid Birthdate!");
             return false; // Birthdate is not in the expected format
@@ -19,24 +21,29 @@ public class UpdateConditionCheck {
         return true;
     }
 
-    public boolean awardsCheck(Artist artist, ArrayList <String> awards) {
+    public boolean awardsCheck(Artist artist, ArrayList<String> awards) {
         for (int i = 0; i < awards.size(); i++) {
             try {
-                String award = awards.get(i);
-                int awardYear = Integer.parseInt(award.substring(0, 4));
-                if (awardYear < 2000) {
-                    // This award was given before 2000, check if it is changed
-                    if (!award.equals(artist.getAwards().get(i))) {
-                        return false; // Awards given before 2000 cannot be changed
-                    }
+                String newAward = awards.get(i);
+                String currentAward = artist.getAwards().get(i);
+    
+                String newYear = newAward.substring(0, 4);
+                String currentYear = currentAward.substring(0, 4);
+    
+                if (Integer.parseInt(currentYear) < 2000) {
+                    return false; // Year before 2000 is unchangeable
+                }
+    
+                if (!newYear.equals(currentYear)) {
+                    return false; // Year and title must remain the same if the year is after 2000
                 }
             } catch (Exception e) {
                 System.out.println("Invalid Awards!");
                 return false;
             }
-            
         }
         return true;
     }
+    
 
 }
