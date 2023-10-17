@@ -42,6 +42,8 @@ public class AddArtistTests {
         assertFalse(artistUtil.addArtist(artist));
         artist.setID("123MMMRR!!");
         assertFalse(artistUtil.addArtist(artist));
+        artist.setID("569mmmrr!!");
+        assertFalse(artistUtil.addArtist(artist));
         artist.setID("569MMMRRRR");
         assertFalse(artistUtil.addArtist(artist));
         artist.setID("569MMMRR!!!");
