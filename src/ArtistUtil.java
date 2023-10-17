@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class ArtistUtil {
     public boolean addArtist(Artist artist) {
         AddConditionCheck acc = new AddConditionCheck();
+        // Check if all elements in the artist if valid
         if (acc.IDCheck(artist.getID()) &&
             acc.addressCheck(artist.getAddress()) &&
             acc.awardsCheck(artist.getAwards()) &&
@@ -13,6 +14,7 @@ public class ArtistUtil {
             acc.birthdateCheck(artist.getBirthdate()) &&
             acc.genresCheck(artist.getGenres()) &&
             acc.occupationsCheck(artist.getOccupations())) {
+            // If valid, try to write the data of this artist to txt file
             try {
                 File file = new File("ArtistData.txt");
                 FileWriter fr = new FileWriter(file, true);
@@ -24,12 +26,14 @@ public class ArtistUtil {
                 fr.close();
                 return true;
             }
+            // Catch and print exceptions
             catch (Exception e) {
                 System.out.println(e);
                 System.out.println("Add Failed!");
                 return false;
             }
         }
+        // If the artist contains invalid data, return false
         return false;
     }
 
@@ -37,7 +41,9 @@ public class ArtistUtil {
     ArrayList<String> genres, ArrayList<String> awards) {
         UpdateConditionCheck ucc = new UpdateConditionCheck();
         AddConditionCheck acc = new AddConditionCheck();
-            if (ucc.birthYearCheck(artist, birthdate, occupations) && ucc.awardsCheck(artist, awards)) {
+        // Check for birthyear and awards, which has limitations in updating
+        if (ucc.birthYearCheck(artist, birthdate, occupations) && ucc.awardsCheck(artist, awards)) {
+            // Check for new elements of the artist
             if (acc.IDCheck(id) &&
                 acc.addressCheck(address) &&
                 acc.awardsCheck(awards) &&
@@ -53,13 +59,30 @@ public class ArtistUtil {
                     artist.setGenres(genres);
                     artist.setOccupations(occupations);
                     artist.setName(name);
-                    System.out.println("Yes");
-                    return true;
+                    try {
+                        File file = new File("ArtistData.txt");
+                        FileWriter fr = new FileWriter(file);
+                        String data = String.format(
+                            "ID: %s\nName: %s\nAddress: %s\nBirthdate: %s\nBio: %s\nOccupations: %s\nGenres: %s\nAwards: %s\n",
+                            artist.getID(), artist.getName(), artist.getAddress(), artist.getBirthdate(), artist.getBio(),
+                            artist.getOccupations(), artist.getGenres(), artist.getAwards());
+                        fr.write(data+"-----------------------------------------------------------------------\n");
+                        fr.close();
+                        return true;
+                    }
+                    // Catch and print exceptions
+                    catch (Exception e) {
+                        System.out.println(e);
+                        System.out.println("Add Failed!");
+                        return false;
+                    }
                 } else {
+                    // Contains invalid element
                     System.out.println("ACC failed");
                     return false;
                 }
             } else {
+                // Updating check failed
                 System.out.println("UCC failed");
                 return false;
             }
@@ -69,6 +92,7 @@ public class ArtistUtil {
     public ArrayList<Artist> getArtists() {
     ArrayList<Artist> artists = new ArrayList<>();
         try {
+            // Read the data line by line
             File file = new File("ArtistData.txt");
             Scanner scanner = new Scanner(file);
 
@@ -83,7 +107,7 @@ public class ArtistUtil {
                     String[] parts = line.split(": ");
                     String key = parts[0];
                     String value = parts[1];
-
+                    // Store the data into a new artist
                     switch (key) {
                         case "ID":
                             artist.setID(value);
@@ -111,15 +135,18 @@ public class ArtistUtil {
                             break;
                     }
                 }
+                // Add the artist to an array
                 artists.add(artist);
             }
             scanner.close();
         } catch (Exception e) {
             System.out.println("Read data failed!");
         }
+        // Return the array of artists
         return artists;
     }
 
+    // Parse the list in txt file as a true arraylist
     private static ArrayList<String> parseList(String input) {
         ArrayList<String> list = new ArrayList<>();
         String[] elements = input.substring(1, input.length() - 1).split(", ");
@@ -127,10 +154,5 @@ public class ArtistUtil {
             list.add(element);
         }
         return list;
-    }
-
-    public static void main(String[] args) {
-        ArtistUtil au = new ArtistUtil();
-        au.getArtists();
     }
 }

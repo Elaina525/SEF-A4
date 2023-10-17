@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 public class UpdateArtistTests {
+    // Create artist and some new element that will be used to update the artist
+
     Artist artist;
  
     ArtistUtil artistUtil = new ArtistUtil();
@@ -25,6 +27,7 @@ public class UpdateArtistTests {
 
     @BeforeEach
     public void SetUp() {
+        // Initialize the artist and the new data
         newID = "789NEWID!!";
         newName = "Jane Doe";
         newAddress = "Sydney|NewSouthWales|Australia";
@@ -45,6 +48,7 @@ public class UpdateArtistTests {
 
     @Test
     public void testValidArtist() {
+        // Test valid updating artist
         newBirthdate = "12-12-2020";
         assertTrue(artistUtil.updateArtist(artist, newID, newName, newAddress, newBirthdate, newBio, newOccupations, newGenres, newAwards));
         newBirthdate = "12-12-1999";
@@ -53,6 +57,7 @@ public class UpdateArtistTests {
 
     @Test
     public void testInvalidBirthYear() {
+        // Try to change occupations with birthyear before 2000, should return false
         newBirthdate = "12-12-1999";
         assertFalse(artistUtil.updateArtist(artist, newID, newName, newAddress, newBirthdate, newBio, newOccupations, newGenres, newAwards));
 
@@ -60,11 +65,13 @@ public class UpdateArtistTests {
 
     @Test
     public void testInvalidAwards() {
+        // Try to change year of editable award
         newAwards.clear();
         newAwards.add("2012, Melbourne Music Festival Season Two");
         assertFalse(artistUtil.updateArtist(artist, newID, newName, newAddress, newBirthdate, newBio, newOccupations, newGenres, newAwards));
         Awards.clear();
         newAwards.clear();
+        // Try to change uneditable award
         Awards.add("1999, Melbourne Music Festival Season Two");
         newAwards.add("1999, 123 Melbourne Music Festival Season Two");
         assertFalse(artistUtil.updateArtist(artist, newID, newName, newAddress, newBirthdate, newBio, newOccupations, newGenres, newAwards));

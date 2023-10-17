@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class AddArtistTests {
 
+    // Create artist and other needed objects
     Artist artist;
  
     ArtistUtil artistUtil = new ArtistUtil();
@@ -15,6 +16,7 @@ public class AddArtistTests {
     
     @BeforeEach
     public void SetUp() {
+        // Intialize the artist to a valid one
         Occupations.add("Singer");
         Genres.add("pop");
         Genres.add("jazz");
@@ -25,6 +27,7 @@ public class AddArtistTests {
 
     @Test
     public void testValidArtist() {
+        // Test if valid returns true
         assertTrue(artistUtil.addArtist(artist));
         artist.setID("987ABCDE_%");
         assertTrue(artistUtil.addArtist(artist));
@@ -32,6 +35,7 @@ public class AddArtistTests {
 
     @Test
     public void testInvalidID() {
+        // Test if invalid ID returns false
         artist.setID("");
         assertFalse(artistUtil.addArtist(artist));
         artist.setID("569MMMRR!");
@@ -46,6 +50,7 @@ public class AddArtistTests {
 
     @Test
     public void testInvalidAddress() {
+        // Test if invalid address returns false
         artist.setAddress("Invalid");
         assertFalse(artistUtil.addArtist(artist));
         artist.setAddress("Invalid");
@@ -62,6 +67,7 @@ public class AddArtistTests {
     
     @Test
     public void testInvalidBirthdate() {
+        // Test if invalid birthdate returns false
         artist.setBirthdate("");
         assertFalse(artistUtil.addArtist(artist));
         artist.setBirthdate("Invalid");
@@ -76,6 +82,7 @@ public class AddArtistTests {
 
     @Test
     public void testInvalidBio() {
+        // Test if invalid bio returns false
         artist.setBio("Too short");
         assertFalse(artistUtil.addArtist(artist));
         artist.setBio("Too long 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 41 43 44 45 46 47 48 49 50 51");
@@ -84,6 +91,7 @@ public class AddArtistTests {
 
     @Test
     public void testInvalidOccupation() {
+        // Test if invalid occupation returns false
         Occupations.clear();
         artist.setOccupations(Occupations);
         assertFalse(artistUtil.addArtist(artist));
@@ -99,6 +107,7 @@ public class AddArtistTests {
 
     @Test
     public void testInvalidGenre() {
+        // Test if invalid genre returns false
         Genres.clear();
         artist.setGenres(Genres);
         assertFalse(artistUtil.addArtist(artist));
@@ -124,6 +133,7 @@ public class AddArtistTests {
 
     @Test
     public void testInvalidAward() {
+        // Test if invalid award returns false
         Awards.clear();
         Awards.add("Invalid");
         artist.setAwards(Awards);
